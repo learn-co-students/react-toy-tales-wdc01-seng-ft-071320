@@ -31,7 +31,6 @@ class App extends React.Component{
   handleFormSubmission = (event) => {
     event.preventDefault()
     this.handleClick()
-    // debugger
     let newToy = {
       name: event.target[0].value,
       image: event.target[1].value,
@@ -66,7 +65,7 @@ class App extends React.Component{
   handleLikeBtn = (likedToy) => {
     let newLikeTotal = likedToy.likes + 1
     let config = {
-      method: "PATCH",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
@@ -76,12 +75,13 @@ class App extends React.Component{
       })
     }
     fetch(`http://localhost:3000/toys/${likedToy.id}`, config)
-    .then(res => res.json())
-    .then(updatedToy => {
-      let toys = [...this.state.toys, updatedToy]
-      this.setState({
-        toys
-      })
+    let updatedToys = this.state.toys.map(toy=>{
+      if(toy === likedToy){
+        return {...toy, likes: toy.likes+1}
+      }}
+    )
+    this.setState({
+      toys: updatedToys
     })
   }
 
