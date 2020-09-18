@@ -63,27 +63,32 @@ class App extends React.Component{
   }
 
   handleLikeBtn = (likedToy) => {
-    // let newLikeTotal = likedToy.likes + 1
-    // let config = {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Accept": "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     likes: newLikeTotal
-    //   })
-    // }
-    // fetch(`http://localhost:3000/toys/${likedToy.id}`, config)
-    // let updatedToys = this.state.toys.map(toy=>{
-    //   if(toy === likedToy){
-    //     return {...toy, likes: newLikeTotal}
-    //   }}
-    // )
-    // this.setState({
-    //   toys: updatedToys
-    // })
-  }
+    let newLikeTotal = likedToy.likes + 1
+    let config = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        likes: newLikeTotal
+      })
+    }
+    fetch(`http://localhost:3000/toys/${likedToy.id}`, config)
+    .then(resp => resp.json())
+    .then(updatedToy => {
+      let updatedToys = this.state.toys.map(toy => {
+        if(toy.id === updatedToy.id){
+          return updatedToy
+        }else{
+          return toy
+        }
+      })
+      this.setState({
+        toys: updatedToys
+      })
+  })
+}
 
   render(){
     return (
