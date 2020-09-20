@@ -63,9 +63,9 @@ class App extends React.Component{
 
   }
 
-  handleLikes = (id) => {
+  handleLikes = (id, likes) => {
 
-    let foundToy = this.state.toys.find(toy => toy.id === id)
+    //let foundToy = this.state.toys.find(toy => toy.id === id)
 
     let configObj = {
       method: "PATCH",
@@ -73,7 +73,7 @@ class App extends React.Component{
         "Content-Type":"application/json"
       },
       body: JSON.stringify({
-        likes: foundToy.likes + 1
+        likes: likes + 1
       })
     }
 

@@ -8,7 +8,7 @@ class ToyCard extends Component {
         <h2>{name}</h2>
         <img src={image} alt={name} className="toy-avatar" />
         <p>{likes} Likes </p>
-        <button onClick={() => this.props.handleLikes(id)} className="like-btn">Like {'<3'}</button>
+        <button onClick={() => this.props.handleLikes(id, likes)} className="like-btn">Like {'<3'}</button>
         <button onClick={() => this.props.handleDelete(id)} className="del-btn">Donate to GoodWill</button>
       </div>
     );
