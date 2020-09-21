@@ -56,6 +56,7 @@ class App extends React.Component{
   }
 
   updateLikes =(clickedToy) =>{
+   //toyObkect is pretty much the clicked toy
     
     let patchRequest = {
       method: "PATCH",
@@ -64,11 +65,32 @@ class App extends React.Component{
       Accept: 'application/json'
     }, 
     body: JSON.stringify({
-      likes: toy.like +=1
+      likes: clickedToy.likes ++
     })
   }
+
+  fetch( `http://localhost:3000/toys/${clickedToy.id}`, patchRequest )
+  .then( res => res.json() )
+  .then( newToy => {
+    let updatedArray = this.state.toys.map(clickedToy => {
+      if(clickedToy.id === newToy.id) {
+        return newToy
+      }
+      else 
+      return clickedToy
+    })
+    this.setState({updatedArray})
+  })
 }
 
+deleteToy =(clickedToy) => {
+  fetch(`http://localhost:3000/toys/${clickedToy.id}`, {
+    method: 'DELETE'
+  })
+  let updatedToysArray = this.state.toys.filter(toyObject => toyObject !== clickedToy ) //filter the toy objects that doesnt equal clickedToy filter returns an array so its finding everythingg that is not clickedToy and putting it in an array
+  this.setState({
+    toys: updatedToysArray})
+}
 
 
   render(){
@@ -85,7 +107,8 @@ class App extends React.Component{
           <button onClick={this.handleClick}> Add a Toy </button>
         </div>
         <ToyContainer toys= {this.state.toys} 
-        updateLikes={this.updateLikes}/>
+        updateLikes={this.updateLikes}
+        deleteToy={this.deleteToy}/>
       </>
     );
   }

@@ -7,9 +7,10 @@ const ToyContainer = (props) => {
    
     <div id="toy-collection">
       
-     {props.toys.map(toy => <ToyCard toy={toy} key={toy.id} updateLikes={props.updateLikes}/>)} 
+     {props.toys.map(toy => <ToyCard toy={toy} key={toy.id} updateLikes={props.updateLikes} deleteToy={props.deleteToy} />)}
+      
     </div>
-  );
+  )
 }
 
 export default ToyContainer;
