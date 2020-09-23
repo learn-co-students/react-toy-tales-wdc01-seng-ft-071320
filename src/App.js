@@ -37,7 +37,8 @@ class App extends React.Component{
 
     let newToy = {
       name: name,
-      image: imageUrl
+      image: imageUrl,
+      likes: 0
     }
 
     fetch('http://localhost:3000/toys/', {
@@ -46,17 +47,15 @@ class App extends React.Component{
         "Content-Type": "application/json",
         Accept: "application/json"
       },
-      body: JSON.stringify({
-        name: name,
-        image: imageUrl,
-        likes: 0
-      })
+      body: JSON.stringify(
+        newToy 
+      )
     })
     .then(resp => resp.json())
-    .then(toy => this.setState({
-      toys: [newToy, ...this.state.toys]
+    .then(addedToy => this.setState({
+      toys: [addedToy, ...this.state.toys]
     },
-    () => console.log(toy)
+    () => console.log(addedToy)
     ))
   }
 
